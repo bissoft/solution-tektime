@@ -1,0 +1,162 @@
+{
+    "navbar": {
+        "login": "Connexion",
+        "pricing": "Tarifs",
+        "menu": "MENU",
+        "language": "Langue"
+    },
+    "hero": {
+        "title_prefix": "Transformez votre boîte de réception en",
+        "title_suffix": "un second cerveau",
+        "description": "Réveillez-vous avec la zenitude de la boîte de réception : réponses parfaitement rédigées, tâches gérées, e-mails organisés et votre chef de personnel IA disponible 24/7.",
+        "get_started": "Commencer",
+        "view_demo": "Voir la démo"
+    },
+    "features": {
+        "badge": "Support client de niveau supérieur",
+        "title": "Tout ce dont vous avez besoin pour évoluer",
+        "card1": {
+            "title": "Ticketing intelligent et gestion",
+            "desc": "Automatisez le routage et la priorisation des tickets avec l'IA."
+        },
+        "card2": {
+            "title": "Ticketing intelligent et gestion des tâches",
+            "desc": "Gérez chaque tâche efficacement avec notre système intelligent centralisé."
+        },
+        "card3": {
+            "title": "Étiquetage IA",
+            "desc": "Catégorisez et étiquetez automatiquement les discussions pour une résolution plus rapide."
+        },
+        "card4": {
+            "title": "Nous rédigeons vos réponses",
+            "desc": "Accélérez les réponses avec des suggestions intelligentes et contextuelles."
+        }
+    },
+    "how_it_works": {
+        "title_part1": "Comment démarrer en",
+        "title_part2": "3 Étapes ?",
+        "subtitle": "TekTIME AI est votre solution tout-en-un pour automatiser votre service client.",
+        "step1": {
+            "title": "Inscription",
+            "subtitle": "Essai gratuit",
+            "desc": "Créez votre compte TekTIME en quelques secondes, sans carte de crédit."
+        },
+        "step2": {
+            "title": "Intégration",
+            "subtitle": "Connectez vos outils",
+            "desc": "Intégrez facilement vos e-mails, chats et outils de support en un clic."
+        },
+        "step3": {
+            "desc": "Configurez et offrez un service client instantané grâce à l'IA."
+        }
+    },
+    "testimonials": {
+        "badge": "Histoires de succès",
+        "title": "Approuvé par les leaders de l'industrie",
+        "list": [
+            {
+                "text": "Nous avons mis en place TekTIME au sein de Transeco2 pour mieux suivre les présentations commerciales de nos vendeurs et avoir des retours réels des entretiens sans interprétations possibles. En intégrant notre parcours commercial, TekTIME est devenu un véritable outil quotidien.",
+                "author": "Davy CHOUMILLE",
+                "role": "Président chez TRANSECO 2",
+                "title": "Un pipeline de vente enfin fonctionnel",
+                "avatar": "https://cdn.prod.website-files.com/68da9e32f495b6801915d287/68dd206fe26164171a153498_1564908244965.jpg"
+            },
+            {
+                "text": "TekTIME a non seulement décidé de donner un pourcentage de ses revenus, mais a rationalisé son approche pour choisir les associations les plus efficaces. Cet engagement fondé sur les preuves témoigne de leur sérieux et de leur désir sincère d'avoir un impact positif durable.",
+                "author": "Romain Barbe",
+                "role": "Fondateur de Mieux Donner",
+                "title": "Une croissance sans effort",
+                "avatar": "https://cdn.prod.website-files.com/68da9e32f495b6801915d287/68dd21198b370c3d67647de0_testimonial3.png"
+            }
+        ]
+    },
+    "cta": {
+        "title": "Prêt à booster votre support ?",
+        "text": "Rejoignez toutes les équipes",
+        "button": "Planifier une démo"
+    },
+    "footer": {
+        "desc": "Rationalisez vos réunions avec nos outils de planification et de gestion efficaces. Créez, mettez à jour et organisez vos réunions en toute simplicité.",
+        "pages": "Pages",
+        "pricing": "Tarifs",
+        "copyright": "© {{year}} TekTIME Inc. Tous droits réservés."
+    },
+    "security": {
+        "title": "Une sécurité de niveau bancaire pour votre tranquillité d'esprit",
+        "subtitle": "Sécurisé. Privé. Chiffré. Vos données sont en sécurité avec nous.",
+        "list": [
+            {
+                "title": "SOC2 Type 1",
+                "desc": "Nous avons terminé l'examen SOC 2 Type 1, audité indépendamment pour la sécurité, la disponibilité et la confidentialité."
+            },
+            {
+                "title": "Chiffrement",
+                "desc": "Vos e-mails sont chiffrés en transit et au repos en utilisant des protocoles de pointe."
+            },
+            {
+                "title": "Infrastructure de classe entreprise",
+                "desc": "Construit sur une infrastructure cloud sécurisée avec une disponibilité de 99,9% et des sauvegardes redondantes."
+            },
+            {
+                "title": "Confidentialité avant tout",
+                "desc": "Nous n'entraînons jamais de modèles IA sur vos données. Vos informations vous appartiennent et ne sont jamais partagées."
+            }
+        ]
+    },
+    "pricing": {
+        "title": "Tarification simple et flexible",
+        "subtitle": "Choisissez le plan qui correspond à vos besoins.",
+        "loading": "Chargement des tarifs...",
+        "unavailable": "Actuellement indisponible.",
+        "most_popular": "Le plus populaire",
+        "subscribe": "S'abonner",
+        "contact_sales": "Contacter les ventes",
+        "per_month": "par mois",
+        "monthly_billing": "Facturation mensuelle",
+        "enterprise": {
+            "title": "Entreprise",
+            "subtitle": "Pour les organisations qui ont besoin d'échelle et de support dédié. Idéal pour 50+ membres d'équipe.",
+            "bespoke_pricing": "Tarification sur mesure",
+            "price_text": "Contactez-nous",
+            "speak_to_sales": "Contacter notre équipe commerciale",
+            "features": []
+        }
+    },
+    "faq": {
+        "title": "Foire Aux Questions",
+        "subtitle": "Tout ce que vous devez savoir sur le produit et la facturation.",
+        "list": [
+            {
+                "question": "Y a-t-il un essai gratuit ?",
+                "answer": "Oui, vous pouvez nous essayer gratuitement pendant 8 jours. Si vous le souhaitez, nous vous fournirons un appel d'intégration personnalisé gratuit de 30 minutes pour vous rendre opérationnel le plus rapidement possible."
+            },
+            {
+                "question": "Puis-je changer mon plan plus tard ?",
+                "answer": "Bien sûr. Notre tarification évolue avec votre entreprise. Discutez avec notre équipe amicale pour trouver une solution qui vous convient."
+            },
+            {
+                "question": "Quelle est votre politique d'annulation ?",
+                "answer": "Nous comprenons que les choses changent. Vous pouvez annuler votre plan à tout moment et nous vous rembourserons la différence déjà payée."
+            },
+            {
+                "question": "D'autres infos peuvent-elles être ajoutées à une facture ?",
+                "answer": "Oui, vous pouvez ajouter vos coordonnées TVA ou toute autre information efficacement à vos factures depuis la section facturation."
+            },
+            {
+                "question": "Comment fonctionne la facturation ?",
+                "answer": "Les plans sont par espace de travail, pas par compte. Vous pouvez mettre à niveau un espace de travail et avoir un nombre illimité d'espaces de travail gratuits."
+            },
+            {
+                "question": "Comment changer l'e-mail de mon compte ?",
+                "answer": "Vous pouvez changer l'adresse e-mail associée à votre compte en allant dans les paramètres de votre compte."
+            }
+        ]
+    },
+    "integrations": {
+        "title": "Récupérez 90% de votre temps email",
+        "subtitle": "Email reçu. Tâche effectuée. Intégrez toute votre pile de support."
+    },
+    "logo_cloud": {
+        "title": "UTILISÉ ET APPROUVÉ PAR"
+    }
+}

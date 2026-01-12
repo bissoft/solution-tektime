@@ -1,0 +1,174 @@
+.integrations-section {
+    padding: 100px 0;
+    background: white;
+    overflow: hidden;
+}
+
+.hub-spoke-container {
+    position: relative;
+    width: 800px;
+    height: 480px;
+    margin: 60px auto 0;
+}
+
+/* SVG styling */
+.connections-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.connection-line {
+    fill: none;
+    stroke: #E5E7EB;
+    stroke-width: 2px;
+    stroke-linecap: round;
+}
+
+/* Central Hub */
+.hub-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.hub-logo-circle {
+    width: 140px;
+    height: 140px;
+    background: linear-gradient(135deg, #335CFF, #5B7FFF);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 6px solid white;
+    box-shadow: 0 10px 40px rgba(51, 92, 255, 0.25);
+}
+
+/* App Nodes */
+.app-node {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    /* Slightly increased padding so icons aren't too massive */
+    z-index: 5;
+    border: 1px solid #F3F4F6;
+    transition: transform 0.3s ease;
+}
+
+.app-node:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Custom Positioning based on SVG paths */
+/* We assume container 800x340. Center is 400x170 */
+/* Adjusted offsets to center larger nodes (100px) properly relative to lines */
+
+/* Left Side */
+.node-l-1 {
+    top: 20px;
+    left: 70px;
+}
+
+.node-l-2 {
+    top: 110px;
+    left: 130px;
+}
+
+.node-l-3 {
+    top: 200px;
+    left: 70px;
+}
+
+/* Right Side */
+.node-r-1 {
+    top: 20px;
+    right: 70px;
+}
+
+.node-r-2 {
+    top: 110px;
+    right: 130px;
+}
+
+.node-r-3 {
+    top: 200px;
+    right: 70px;
+}
+
+@media (max-width: 991px) {
+    .hub-spoke-container {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        min-height: 480px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    .connections-svg {
+        display: none;
+    }
+
+    .hub-center {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        order: 1;
+        margin: 40px 0;
+    }
+
+    .app-node {
+        position: relative;
+        top: auto !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+    }
+}
+
+.app-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.integration-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+}
+
+.app-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Ensure padding is sufficient for icon + text */
+.app-node {
+    padding: 16px;
+    width: 120px;
+    height: 120px;
+}

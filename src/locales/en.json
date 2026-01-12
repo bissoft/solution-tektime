@@ -1,0 +1,162 @@
+{
+    "navbar": {
+        "login": "Login",
+        "pricing": "Pricing",
+        "menu": "MENU",
+        "language": "Language"
+    },
+    "hero": {
+        "title_prefix": "Turn your inbox into",
+        "title_suffix": "a second brain",
+        "description": "Wake up to inbox zen: replies perfectly drafted, tasks handled, emails organized and your AI chief of staff on call 24/7.",
+        "get_started": "Get Started",
+        "view_demo": "View Demo"
+    },
+    "features": {
+        "badge": "Next-Level Customer Support",
+        "title": "Everything you need to scale",
+        "card1": {
+            "title": "Smart Ticketing & Management",
+            "desc": "Automate ticket routing and prioritization with AI."
+        },
+        "card2": {
+            "title": "Smart Ticketing & Task Management",
+            "desc": "Manage every task efficiently with our centralized smart system."
+        },
+        "card3": {
+            "title": "AI Labelling",
+            "desc": "Automatically categorize and tag discussions for faster resolution."
+        },
+        "card4": {
+            "title": "We draft your responses",
+            "desc": "Speed up replies with intelligent, context-aware suggestions."
+        }
+    },
+    "how_it_works": {
+        "title_part1": "How to start in",
+        "title_part2": "3 Steps?",
+        "subtitle": "TekTIME AI is one stop all solution for your automating your customer service flow.",
+        "step1": {
+            "title": "Signup",
+            "subtitle": "Signup for free trial",
+            "desc": "Create your TekTIME account in seconds—no credit card required."
+        },
+        "step2": {
+            "title": "Integration",
+            "subtitle": "Integrate your channels",
+            "desc": "Easily integrate your email, chat, and support tools with one click."
+        },
+        "step3": {
+            "desc": "Set-up and start delivering instant, AI-powered customer service."
+        }
+    },
+    "testimonials": {
+        "badge": "Success Stories",
+        "title": "Loved by industry leaders",
+        "list": [
+            {
+                "text": "We implemented TekTIME within Transeco2 to better track our salespeople's commercial presentations and get real feedback from interviews without possible interpretations. By integrating our sales journey, TekTIME has become a true daily tool.",
+                "author": "Davy CHOUMILLE",
+                "role": "President at TRANSECO 2",
+                "title": "Sales pipeline finally working",
+                "avatar": "https://cdn.prod.website-files.com/68da9e32f495b6801915d287/68dd206fe26164171a153498_1564908244965.jpg"
+            },
+            {
+                "text": "TekTIME not only decided to donate a percentage of its revenue but rationalized its approach to choosing the most effective charities. This evidence-based commitment testifies to their seriousness and sincere desire to have a lasting positive impact.",
+                "author": "Romain Barbe",
+                "role": "Founder of Mieux Donner",
+                "title": "Growth that felt effortless",
+                "avatar": "https://cdn.prod.website-files.com/68da9e32f495b6801915d287/68dd21198b370c3d67647de0_testimonial3.png"
+            }
+        ]
+    },
+    "cta": {
+        "title": "Ready to supercharge your support?",
+        "text": "Join all the teams",
+        "button": "Schedule Demo"
+    },
+    "footer": {
+        "desc": "Streamline your meetings with our efficient scheduling and management tools. Create, update, and organize meetings with ease.",
+        "pages": "Pages",
+        "pricing": "Pricing",
+        "copyright": "© {{year}} TekTIME Inc. All rights reserved."
+    },
+    "security": {
+        "title": "Bank-level security for your peace of mind",
+        "subtitle": "Secure. Private. Encrypted. Your data is safe with us.",
+        "list": [
+            {
+                "title": "SOC2 Type 1",
+                "desc": "We’ve completed SOC 2 Type 1 examination, independently audited for security, availability, and confidentiality."
+            },
+            {
+                "title": "Encryption",
+                "desc": "Your emails are encrypted in transit and at rest using industry-leading protocols."
+            },
+            {
+                "title": "Enterprise-Grade Infrastructure",
+                "desc": "Built on secure cloud infrastructure with 99.9% uptime and redundant backups."
+            },
+            {
+                "title": "Privacy First",
+                "desc": "We never train AI models on your data. Your information stays yours and is never shared."
+            }
+        ]
+    },
+    "pricing": {
+        "title": "Simple, Flexible Pricing",
+        "subtitle": "Choose the plan that fits your needs.",
+        "loading": "Loading pricing...",
+        "unavailable": "Currently unavailable.",
+        "most_popular": "Most Popular",
+        "subscribe": "Subscribe",
+        "contact_sales": "Contact Sales",
+        "per_month": "per month",
+        "monthly_billing": "Monthly billing",
+        "enterprise": {
+            "title": "Enterprise",
+            "subtitle": "For organizations that need scale and dedicated support. Best for 50+ team members.",
+            "bespoke_pricing": "Bespoke pricing",
+            "price_text": "Get in touch",
+            "speak_to_sales": "Speak to sales",
+            "features": []
+        }
+    },
+    "faq": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Everything you need to know about the product and billing.",
+        "list": [
+            {
+                "question": "Is there a free trial available?",
+                "answer": "Yes, you can try us for free for 8 days. If you want, we’ll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible."
+            },
+            {
+                "question": "Can I change my plan later?",
+                "answer": "Of course. Our pricing scales with your company. Chat to our friendly team to find a solution that works for you."
+            },
+            {
+                "question": "What is your cancellation policy?",
+                "answer": "We understand that things change. You can cancel your plan at any time and we’ll refund you the difference already paid."
+            },
+            {
+                "question": "Can other info be added to an invoice?",
+                "answer": "Yes, you can add your VAT details or any other information effectively to your invoices from the billing section."
+            },
+            {
+                "question": "How does billing work?",
+                "answer": "Plans are per workspace, not per account. You can upgrade one workspace, and still have any number of free workspaces."
+            },
+            {
+                "question": "How do I change my account email?",
+                "answer": "You can change the email address associated with your account by going to your account settings."
+            }
+        ]
+    },
+    "integrations": {
+        "title": "Reclaim 90% of your email time",
+        "subtitle": "Email in. Task done. Integrate your entire support stack."
+    },
+    "logo_cloud": {
+        "title": "TRUSTED AND USED BY"
+    }
+}
