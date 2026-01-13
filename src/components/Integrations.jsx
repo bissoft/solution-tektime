@@ -1,14 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import { siIonos } from 'simple-icons';
+import { ArrowRight, Bot, Mail, Calendar, MessageSquare, Database } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './Integrations.css';
+import { siIonos } from 'simple-icons';
 
 const surroundingApps = [
-    { name: 'Gmail', imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg', color: '#E4405F', isComponent: false },
-    { name: 'Outlook', imageUrl: 'https://cdn-icons-png.flaticon.com/512/732/732223.png', color: '#0078D4', isComponent: false },
-    { name: 'Ionos', icon: siIonos, color: '#003D8F', isComponent: false },
+    { name: 'Gmail', icon: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", color: '#E4405F', bg: '#fce8ec', position: { top: '15%', left: '15%' }, path: "M 180 100 C 250 100, 350 200, 400 200" },
+    { name: 'Outlook', icon: "https://cdn-icons-png.flaticon.com/512/732/732223.png", color: '#0078D4', bg: '#e5f4ff', position: { top: '15%', right: '15%' }, path: "M 620 100 C 550 100, 450 200, 400 200" },
+    { name: 'Ionos', simpe_icon: siIonos, color: '#003D8F', bg: '#e5edff', position: { top: '67%', left: '14%' }, path: "M 180 300 C 250 300, 350 200, 400 200" },
+    // { name: 'Data', icon: Database, color: '#000000', bg: '#f0f0f0', position: { top: '75%', right: '15%' }, path: "M 620 300 C 550 300, 450 200, 400 200" },
 ];
 
 export default function Integrations() {
@@ -16,7 +17,6 @@ export default function Integrations() {
 
     return (
         <section className="section integrations-section">
-            {/* ... header content same as before ... */}
             <div className="container">
                 <div className="text-center mb-16">
                     <motion.h2
@@ -43,8 +43,12 @@ export default function Integrations() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        <button className="btn btn-primary" onClick={() => window.open('https://calendly.com/tektime/tektime-qu-est-ce-que-c-est', '_blank')}>{t('hero.get_started')} <ArrowRight size={16} className="ml-2" /></button>
-                        <button className="btn btn-secondary" onClick={() => window.open('https://tektime.io', '_blank')}>{t('hero.view_demo')}</button>
+                        <button className="btn btn-primary" onClick={() => window.open('https://tektime.io/register', '_blank', 'noreferrer')}>
+                            {t('hero.get_started')} <ArrowRight size={16} className="ml-2" />
+                        </button>
+                        <button className="btn btn-secondary" onClick={() => window.open('https://youtu.be/ZkFFcwOQTLw', '_blank', 'noreferrer')}>
+                            {t('hero.view_demo')}
+                        </button>
                     </motion.div>
                 </div>
 
@@ -52,73 +56,61 @@ export default function Integrations() {
                 <div className="hub-spoke-container">
 
                     {/* SVG Layer for Lines */}
-                    <svg className="connections-svg">
-                        <motion.path
-                            d="M 200 100 C 300 100, 350 170, 400 170"
-                            className="connection-line"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1.5, ease: "easeInOut" }}
-                        />
-                        <motion.path
-                            d="M 600 100 C 500 100, 450 170, 400 170"
-                            className="connection-line"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1.5, ease: "easeInOut", delay: 0.1 }}
-                        />
-                        <motion.path
-                            d="M 400 280 L 400 170"
-                            className="connection-line"
-                            initial={{ pathLength: 0 }}
-                            whileInView={{ pathLength: 1 }}
-                            transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
-                        />
+                    <svg className="connections-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
+                        {surroundingApps.map((app, index) => (
+                            <motion.path
+                                key={index}
+                                d={app.path}
+                                className="connection-line"
+                                stroke="#E5E5E5"
+                                strokeWidth="2"
+                                fill="none"
+                                initial={{ pathLength: 0, opacity: 0 }}
+                                whileInView={{ pathLength: 1, opacity: 1 }}
+                                transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 + index * 0.1 }}
+                            />
+                        ))}
                     </svg>
 
                     {/* Central Hub */}
                     <div className="hub-center">
                         <motion.div
-                            className="hub-logo-circle"
-                            style={{ width: '100px', height: '100px' }}
-                            animate={{ boxShadow: ["0 0 0 0px rgba(51, 92, 255, 0.4)", "0 0 0 20px rgba(51, 92, 255, 0)"] }}
-                            transition={{ duration: 2, repeat: Infinity }}
+                            className="hub-robot-circle"
+                            initial={{ scale: 0 }}
+                            whileInView={{ scale: 1 }}
+                            transition={{ type: "spring", duration: 0.8 }}
                         >
-                            <span style={{ fontWeight: 'bold', color: 'white' }}>TekTIME</span>
+                            <motion.div
+                                className="hub-pulse"
+                                animate={{ boxShadow: ["0 0 0 0px rgba(51, 92, 255, 0.4)", "0 0 0 20px rgba(51, 92, 255, 0)"] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            />
+                            <Bot size={48} color="white" />
                         </motion.div>
                     </div>
 
                     {/* Surrounding Apps */}
-                    <motion.div className="app-node" style={{ top: '25%', left: '20%' }} initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ delay: 0.5 }}>
-                        <div className="app-icon-wrapper">
-                            {surroundingApps[0].imageUrl ? (
-                                <img src={surroundingApps[0].imageUrl} alt={surroundingApps[0].name} className="integration-icon" style={{ width: '24px', height: '24px' }} />
+                    {surroundingApps.map((app, index) => (
+                        <motion.div
+                            key={index}
+                            className="app-node"
+                            style={app.position}
+                            initial={{ scale: 0, opacity: 0 }}
+                            whileInView={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.5 + index * 0.1, type: "spring" }}
+                        >
+                            <div className="app-icon-wrapper">
+                                  {app.icon ? (
+                                <img src={app.icon} alt={app.name} className="integration-icon" style={{ width: '24px', height: '24px' }} />
                             ) : (
-                                <svg role="img" viewBox="0 0 24 24" className="integration-icon" fill={surroundingApps[0].color}>
-                                    <path d={surroundingApps[0].icon.path} />
+                                <svg role="img" viewBox="0 0 24 24" className="integration-icon" style={{ width: '38px', height: '38px' }}  fill={app.color}>
+                                    <path d={app.simpe_icon.path} />
                                 </svg>
                             )}
-                            <span className="app-label">{surroundingApps[0].name}</span>
-                        </div>
-                    </motion.div>
-                    <motion.div className="app-node" style={{ top: '25%', right: '20%' }} initial={{ scale: 0 }} whileInView={{ scale: 1 }} transition={{ delay: 0.6 }}>
-                        <div className="app-icon-wrapper">
-                            {surroundingApps[1].imageUrl ? (
-                                <img src={surroundingApps[1].imageUrl} alt={surroundingApps[1].name} className="integration-icon" style={{ width: '24px', height: '24px' }} />
-                            ) : (
-                                <></>
-                            )}
-                            <span className="app-label">{surroundingApps[1].name}</span>
-                        </div>
-                    </motion.div>
-                    <motion.div className="app-node" style={{ top: '75%', left: '50%' }} initial={{ scale: 0, x: '-50%' }} whileInView={{ scale: 1, x: '-50%' }} transition={{ delay: 0.7 }}>
-                        <div className="app-icon-wrapper">
-                            <svg role="img" viewBox="0 0 24 24" className="integration-icon" fill={surroundingApps[2].color}>
-                                <path d={surroundingApps[2].icon.path} />
-                            </svg>
-                            {/* Ionos label removed as per design feedback */}
-                        </div>
-                    </motion.div>
+                            {/* <span className="app-label">{app.name}</span>      */}
+                                                   </div>
+                        </motion.div>
+                    ))}
 
                 </div>
             </div>

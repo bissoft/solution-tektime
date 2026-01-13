@@ -72,10 +72,10 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                         className="hero-actions justify-center"
                     >
-                        <button className="btn btn-primary" onClick={() => window.open('https://calendly.com/tektime/tektime-qu-est-ce-que-c-est', '_blank')}>
+                        <button className="btn btn-primary" onClick={() => window.open('https://tektime.io/register', '_blank')}>
                             {t('hero.get_started')} <ArrowRight size={18} style={{ marginLeft: 8 }} />
                         </button>
-                        <button className="btn btn-secondary" onClick={() => window.open('https://tektime.io', '_blank')}>
+                        <button className="btn btn-secondary" onClick={() => window.open('https://youtu.be/ZkFFcwOQTLw', '_blank')}>
                             <Play size={16} fill="currentColor" style={{ marginRight: 8 }} />
                             {t('hero.view_demo')}
                         </button>

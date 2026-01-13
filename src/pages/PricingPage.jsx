@@ -32,6 +32,7 @@ export default function PricingPage() {
                             name: item.name,
                             price: `${currencySymbol}${parseFloat(item.price).toFixed(0)}`,
                             period: item.payment_type.includes('Mensuelle') ? '/mo' : item.payment_type, // simplified for this page
+                            description: item.description, // Map description from API
                             features: [
                                 // `${item.no_of_licenses} Agents included`, // Adapted phrasing
                                 `${item.no_of_licenses} ${item.no_of_licenses > 1 ? 'Licenses' : 'License'}`,
@@ -106,17 +107,11 @@ export default function PricingPage() {
                             <Reveal key={idx} delay={idx * 0.1}>
                                 <div
                                     className={`p-card-v2 ${plan.isPrimary ? 'primary-card' : ''}`}
-                                    style={plan.isEnterprise ? {
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                        gap: '2rem'
-                                    } : {}}
                                 >
-                                    <div className="p-card-header" style={plan.isEnterprise ? { width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' } : {}}>
+                                    <div className="p-card-header">
                                         <h3>{plan.name}</h3>
                                         {plan.isEnterprise ? (
-                                            <div className="price-row" style={{ justifyContent: 'center', width: '100%' }}>
+                                            <div className="price-row">
                                                 <span className="p-amount" style={{ fontSize: '28px', lineHeight: '1.2' }}>{plan.price}</span>
                                             </div>
                                         ) : (
@@ -130,16 +125,21 @@ export default function PricingPage() {
                                         )}
                                     </div>
 
-                                    {!plan.isEnterprise && (
-                                        <div className="p-card-features">
-                                            {plan.features.map((f, i) => (
+                                    <div className="p-card-features">
+                                        {plan.description ? (
+                                            <div 
+                                                className="plan-description-content" 
+                                                dangerouslySetInnerHTML={{ __html: plan.description }} 
+                                            />
+                                        ) : (
+                                            plan.features.map((f, i) => (
                                                 <div key={i} className="pf-item">
                                                     <div className="pf-icon"><Check size={12} strokeWidth={4} color="white" /></div>
                                                     <span>{f}</span>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    )}
+                                            ))
+                                        )}
+                                    </div>
 
                                     <button
                                         className={`btn-v2 ${plan.isPrimary ? 'btn-blue' : 'btn-white'}`}

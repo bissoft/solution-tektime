@@ -29,6 +29,7 @@ export default function Pricing() {
                             price: `${currencySymbol}${parseFloat(item.price).toFixed(0)}`,
                             // If payment_type is "Mensuelle (1 mois)", display "per month", otherwise use raw string
                             period: item.payment_type.includes('Mensuelle') ? t('pricing.per_month') : item.payment_type,
+                            description: item.description, // Map description from API
                             // Construct features based on available data
                             features: [
                                 `${item.no_of_licenses} ${item.no_of_licenses > 1 ? 'Licenses' : 'License'}`,
@@ -133,12 +134,19 @@ export default function Pricing() {
 
                             {!plan.isEnterprise && (
                                 <div className="plan-features">
-                                    {plan.features.map((feature, fIdx) => (
-                                        <div key={fIdx} className="feature-item">
-                                            <Check size={16} className="feature-check" />
-                                            <span>{feature}</span>
-                                        </div>
-                                    ))}
+                                    {plan.description ? (
+                                        <div
+                                            className="plan-description-content"
+                                            dangerouslySetInnerHTML={{ __html: plan.description }}
+                                        />
+                                    ) : (
+                                        plan.features.map((feature, fIdx) => (
+                                            <div key={fIdx} className="feature-item">
+                                                <Check size={16} className="feature-check" />
+                                                <span>{feature}</span>
+                                            </div>
+                                        ))
+                                    )}
                                 </div>
                             )}
 
