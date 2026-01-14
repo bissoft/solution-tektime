@@ -43,7 +43,14 @@ export default function Integrations() {
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
                     >
-                        <button className="btn btn-primary" onClick={() => window.open('https://tektime.io/register', '_blank', 'noreferrer')}>
+                        <button className="btn btn-primary" onClick={() => {
+                            const element = document.getElementById('pricing');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                window.location.href = '#pricing';
+                            }
+                        }}>
                             {t('hero.get_started')} <ArrowRight size={16} className="ml-2" />
                         </button>
                         <button className="btn btn-secondary" onClick={() => window.open('https://youtu.be/ZkFFcwOQTLw', '_blank', 'noreferrer')}>

@@ -72,7 +72,14 @@ export default function Hero() {
                         transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                         className="hero-actions justify-center"
                     >
-                        <button className="btn btn-primary" onClick={() => window.open('https://tektime.io/register', '_blank')}>
+                        <button className="btn btn-primary" onClick={() => {
+                            const element = document.getElementById('pricing');
+                            if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                            } else {
+                                window.location.href = '#pricing';
+                            }
+                        }}>
                             {t('hero.get_started')} <ArrowRight size={18} style={{ marginLeft: 8 }} />
                         </button>
                         <button className="btn btn-secondary" onClick={() => window.open('https://youtu.be/ZkFFcwOQTLw', '_blank')}>
