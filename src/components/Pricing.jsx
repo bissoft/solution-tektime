@@ -6,6 +6,8 @@ import { API_BASE_URL, BASE_URL } from '../apiConfig';
 
 export default function Pricing() {
     const { t } = useTranslation();
+    const [billingCycle, setBillingCycle] = React.useState('monthly');
+    const [allPlans, setAllPlans] = React.useState([]);
     const [plans, setPlans] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
@@ -24,18 +26,23 @@ export default function Pricing() {
                         if (item.currency === 'Dollar' || item.currency === 'USD' || item.currency === 'usd') currencySymbol = '$';
                         else if (item.currency === 'Euro' || item.currency === 'EUR' || item.currency === 'eur') currencySymbol = '€';
 
+                        const isMonthly = item.payment_type.toLowerCase().includes('mensuelle') || item.payment_type.toLowerCase().includes('monthly');
+                        const cycle = isMonthly ? 'monthly' : 'yearly';
+
                         return {
                             name: item.name,
                             price: `${currencySymbol}${parseFloat(item.price).toFixed(0)}`,
                             // If payment_type is "Mensuelle (1 mois)", display "per month", otherwise use raw string
-                            period: item.payment_type.includes('Mensuelle') ? t('pricing.per_month') : item.payment_type,
+                            period: isMonthly ? t('pricing.per_month') : (cycle === 'yearly' ? t('pricing.per_year') : item.payment_type),
                             description: item.description, // Map description from API
+                            licenses: item.no_of_licenses, // Store license count
+                            billingCycle: cycle,
                             // Construct features based on available data
                             features: [
-                                `${item.no_of_licenses} ${item.no_of_licenses > 1 ? 'Licenses' : 'License'}`,
+                                `${item.no_of_licenses} ${item.no_of_licenses > 1 ? t('pricing.licenses') : t('pricing.license')}`,
                                 `Module: ${Array.isArray(item.type) ? item.type.join(', ') : item.type.replace(/[\[\]"]/g, '')}`,
                                 // Only add payment frequency if not already covered by "per month" label
-                                item.payment_type.includes('Mensuelle') ? t('pricing.monthly_billing') : item.payment_type,
+                                isMonthly ? t('pricing.monthly_billing') : (cycle === 'yearly' ? t('pricing.annual_billing') : item.payment_type),
                             ].filter(Boolean),
                             isPopular: item.name === 'Pro' || item.name === 'Basic Messages', // Highlight Basic or Pro as popular
                             // Store original ID for keys or logic
@@ -51,9 +58,11 @@ export default function Pricing() {
                         features: t('pricing.enterprise.features', { returnObjects: true }), // Ensure this returns array
                         isPopular: false,
                         isEnterprise: true,
-                        id: 'enterprise'
+                        id: 'enterprise',
+                        billingCycle: 'both' // Enterprise is always visible
                     });
 
+                    setAllPlans(mappedPlans);
                     setPlans(mappedPlans);
                 } else {
                     throw new Error('Invalid data format');
@@ -82,6 +91,14 @@ export default function Pricing() {
             }
         }
     }, [loading]);
+
+    const hasMonthly = allPlans.some(p => p.billingCycle === 'monthly');
+    const hasYearly = allPlans.some(p => p.billingCycle === 'yearly');
+    const showToggle = hasMonthly && hasYearly;
+
+    const filteredPlans = allPlans.filter(plan =>
+        plan.billingCycle === 'both' || plan.billingCycle === billingCycle
+    );
 
     if (loading) {
         return (
@@ -114,8 +131,50 @@ export default function Pricing() {
                     <p className="subtitle">{t('pricing.subtitle')}</p>
                 </div>
 
+                {showToggle && (
+                    <div className="pricing-toggle-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem', marginBottom: '1rem' }}>
+                        <div className="pricing-toggle" style={{ background: '#e2e8f0', padding: '4px', borderRadius: '50px', display: 'inline-flex', position: 'relative' }}>
+                            <button
+                                className={`toggle-btn ${billingCycle === 'yearly' ? 'active' : ''}`}
+                                onClick={() => setBillingCycle('yearly')}
+                                style={{
+                                    padding: '8px 24px',
+                                    borderRadius: '50px',
+                                    border: 'none',
+                                    background: billingCycle === 'yearly' ? 'white' : 'transparent',
+                                    color: billingCycle === 'yearly' ? '#0f172a' : '#64748b',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    boxShadow: billingCycle === 'yearly' ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'
+                                }}
+                            >
+                                {t('pricing.annual')}
+                                {/* <span className="discount-badge" style={{ marginLeft: '4px', color: '#10b981', fontSize: '0.8em' }}>-25%</span> */}
+                            </button>
+                            <button
+                                className={`toggle-btn ${billingCycle === 'monthly' ? 'active' : ''}`}
+                                onClick={() => setBillingCycle('monthly')}
+                                style={{
+                                    padding: '8px 24px',
+                                    borderRadius: '50px',
+                                    border: 'none',
+                                    background: billingCycle === 'monthly' ? 'white' : 'transparent',
+                                    color: billingCycle === 'monthly' ? '#0f172a' : '#64748b',
+                                    fontWeight: '600',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.3s ease',
+                                    boxShadow: billingCycle === 'monthly' ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'
+                                }}
+                            >
+                                {t('pricing.monthly')}
+                            </button>
+                        </div>
+                    </div>
+                )}
+
                 <div className="pricing-grid mt-8">
-                    {plans.map((plan, idx) => (
+                    {filteredPlans.map((plan, idx) => (
                         <div
                             key={idx}
                             className={`pricing-card ${plan.isPopular ? 'popular' : ''}`}
@@ -129,18 +188,23 @@ export default function Pricing() {
                             {plan.isPopular && <div className="popular-badge">{t('pricing.most_popular')}</div>}
                             <div className="plan-header" style={plan.isEnterprise ? { width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' } : {}}>
                                 <h3>{plan.name}</h3>
-                                <div className="plan-price" style={plan.isEnterprise ? { justifyContent: 'center', width: '100%' } : {}}>
-                                    {plan.isEnterprise ? (
-                                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
-                                            <span style={{ fontSize: '2rem', lineHeight: '1.2' }}>{plan.price}</span>
-                                        </div>
-                                    ) : (
-                                        <>
+                                {plan.isEnterprise ? (
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                                        <span style={{ fontSize: '2rem', lineHeight: '1.2' }}>{plan.price}</span>
+                                    </div>
+                                ) : (
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                        <div className="plan-price" style={{ marginBottom: '0.25rem', width: '100%' }}>
                                             {plan.price}
                                             <span className="plan-period">{plan.period}</span>
-                                        </>
-                                    )}
-                                </div>
+                                        </div>
+                                        {plan.licenses && (
+                                            <span style={{ fontSize: '0.9rem', color: '#6b7280', fontWeight: '500' }}>
+                                                {t(plan.licenses > 1 ? 'pricing.for_licenses' : 'pricing.for_license', { count: plan.licenses })}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
                             {!plan.isEnterprise && (
@@ -179,6 +243,6 @@ export default function Pricing() {
                     ))}
                 </div>
             </div>
-        </section>
+        </section >
     );
 }
