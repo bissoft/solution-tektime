@@ -257,3 +257,45 @@ p {
 .gap-8 {
   gap: 32px !important;
 }
+
+/* Spinner Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.border-t-2 {
+  border-top-width: 2px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.h-12 {
+  height: 3rem;
+}

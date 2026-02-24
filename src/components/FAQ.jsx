@@ -3,17 +3,17 @@ import { PlusCircle, MinusCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import './FAQ.css';
 
-export default function FAQ() {
+export default function FAQ({ data }) {
     const { t } = useTranslation();
     const [openIndex, setOpenIndex] = useState(null);
-    const faqs = t('faq.list', { returnObjects: true });
+    const faqs = data?.faq_items || t('faq.list', { returnObjects: true });
 
     const toggleFAQ = (index) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
     return (
-        <section className="section faq-section">
+        <section className="section faq-section" id="faq">
             <div className="container">
                 <div className="text-center section-header">
                     <h2>{t('faq.title')}</h2>
@@ -39,3 +39,4 @@ export default function FAQ() {
         </section>
     );
 }
+
