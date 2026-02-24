@@ -1404,7 +1404,9 @@ export default function SystemeFeatures({ sections = [] }) {
             Aucune section disponible pour le moment.
           </div>
         ) : (
-          sections.map((section, idx) => {
+          sections
+                ?.filter((section) => section.gate_name !== "Tektime")
+          ?.map((section, idx) => {
             const isReverse = idx % 2 !== 0;
             const bgColor = SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length];
             const hasMedia = section.hero_media_path;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import SystemeHomeContent from "../components/SystemeHomeContent";
 import "./Home.css";
 
-const LANDING_PAGES_API = "https://iziworlds.com/api/landing-pages";
+const LANDING_PAGES_API = "https://api.tektime.io/api/landing-pages";
 
 export default function Home() {
   const [sections, setSections] = useState([]);
