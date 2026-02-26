@@ -50,9 +50,9 @@ export default function Navbar() {
             <Link to={BASE_URL + "/login"} className="nav-btn nav-btn-primary">
               {t("navbar.login")}
             </Link>
-            <Link to={"/pricing"} className="nav-btn nav-btn-primary">
+            {/* <Link to={"/pricing"} className="nav-btn nav-btn-primary">
               {t("navbar.pricing")}
-            </Link>
+            </Link> */}
 
             <button
               className="menu-trigger"
@@ -93,13 +93,13 @@ export default function Navbar() {
         </div>
 
         <div className="drawer-links">
-          <Link
+          {/* <Link
             to="/pricing"
             className="drawer-item"
             onClick={() => setIsMenuOpen(false)}
           >
             {t("navbar.pricing")}
-          </Link>
+          </Link> */}
           <Link
             to="/login"
             className="drawer-item"
