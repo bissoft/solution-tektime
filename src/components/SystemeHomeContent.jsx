@@ -19,6 +19,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../apiConfig";
 
 const NAV_LINKS = [
   { label: "Pourquoi choisir systeme.io ?", href: "#why" },
@@ -1405,129 +1406,154 @@ export default function SystemeFeatures({ sections = [] }) {
           </div>
         ) : (
           sections
-                ?.filter((section) => section.gate_name !== "Tektime")
-          ?.map((section, idx) => {
-            const isReverse = idx % 2 !== 0;
-            const bgColor = SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length];
-            const hasMedia = section.hero_media_path;
-            const isVideo = section.hero_media_type === "video";
+            ?.filter((section) => section.gate_name !== "Tektime")
+            ?.map((section, idx) => {
+              const isReverse = idx % 2 !== 0;
+              const bgColor = SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length];
+              const hasMedia = section.hero_media_path;
+              const isVideo = section.hero_media_type === "video";
 
-            return (
-              <div key={section.id}>
-                <section
-                  className={`sio-detail-section${isReverse ? " reverse" : ""}`}
-                >
-                  <div className="sio-detail-content">
-                    {/* Gate name badge */}
-                    {section.gate_name && (
+              return (
+                <div key={section.id}>
+                  <section
+                    className={`sio-detail-section${isReverse ? " reverse" : ""}`}
+                  >
+                    <div className="sio-detail-content">
+                      {/* Gate name badge */}
+                      {section.gate_name && (
+                        <div
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 6,
+                            background: "#eff6ff",
+                            color: "#1a56db",
+                            fontSize: 12,
+                            fontWeight: 700,
+                            padding: "4px 12px",
+                            borderRadius: 20,
+                            marginBottom: 14,
+                            border: "1px solid #dbeafe",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                          }}
+                        >
+                          {section.gate_name}
+                        </div>
+                      )}
+                      <h2>{section.title}</h2>
+                      <p>{section.subtitle}</p>
+                      {section.gate_name && (
+                        <Link
+                          to={`https://tektime.io/gate/${section.gate_name}`}
+                          className="sio-detail-link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            const link = `https://tektime.io/gate/${section.gate_name}`;
+
+                            // Track click if ID is available
+                            if (section?.id) {
+                              try {
+                                await fetch(
+                                  `${API_BASE_URL}/landing-pages/${section.id}/click`,
+                                  {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                  },
+                                );
+                              } catch (error) {
+                                console.error("Error tracking click:", error);
+                              }
+                            }
+
+                            if (link) {
+                              window.open(link, "_blank");
+                            }
+                          }}
+                        >
+                          En savoir plus <ArrowRight size={16} />
+                        </Link>
+                      )}
+                      {/* Hero benefits as check-tags */}
+                      {section.hero_benefits?.some((b) => b) && (
+                        <div className="sio-replaces">
+                          <div className="sio-replaces-label">Avantages</div>
+                          <div className="sio-replaces-tags">
+                            {section.hero_benefits
+                              .filter((b) => b)
+                              .map((b, i) => (
+                                <span className="sio-tag" key={i}>
+                                  <Check
+                                    size={12}
+                                    className="sio-tag-check"
+                                    style={{ color: "#10b981" }}
+                                  />
+                                  {b}
+                                </span>
+                              ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Visual: real media if available, else empty */}
+                    <div className="sio-detail-visual">
                       <div
+                        className="sio-visual-placeholder"
                         style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 6,
-                          background: "#eff6ff",
-                          color: "#1a56db",
-                          fontSize: 12,
-                          fontWeight: 700,
-                          padding: "4px 12px",
-                          borderRadius: 20,
-                          marginBottom: 14,
-                          border: "1px solid #dbeafe",
-                          textTransform: "uppercase",
-                          letterSpacing: "0.05em",
+                          background: bgColor,
+                          position: "relative",
+                          overflow: "hidden",
+                          borderRadius: "12px",
+                          height: "100%",
+                          minHeight: 320,
                         }}
                       >
-                        {section.gate_name}
+                        {hasMedia &&
+                          (isVideo ? (
+                            <video
+                              src={section.hero_media_path}
+                              autoPlay={section.hero_autoplay}
+                              muted={section.hero_autoplay}
+                              loop={!!section.hero_autoplay}
+                              playsInline
+                              controls
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                display: "block",
+                                borderRadius: "12px",
+                                position: "relative",
+                                zIndex: 1,
+                              }}
+                            />
+                          ) : (
+                            <img
+                              src={section.hero_media_path}
+                              alt={section.hero_alt_text || section.title}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                                display: "block",
+                                borderRadius: "12px",
+                              }}
+                            />
+                          ))}
                       </div>
-                    )}
-                    <h2>{section.title}</h2>
-                    <p>{section.subtitle}</p>
-                    {section.gate_name && (
-                      <Link
-                        to={`https://tektime.io/gate/${section.gate_name}`}
-                        className="sio-detail-link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        En savoir plus <ArrowRight size={16} />
-                      </Link>
-                    )}
-                    {/* Hero benefits as check-tags */}
-                    {section.hero_benefits?.some((b) => b) && (
-                      <div className="sio-replaces">
-                        <div className="sio-replaces-label">Avantages</div>
-                        <div className="sio-replaces-tags">
-                          {section.hero_benefits
-                            .filter((b) => b)
-                            .map((b, i) => (
-                              <span className="sio-tag" key={i}>
-                                <Check
-                                  size={12}
-                                  className="sio-tag-check"
-                                  style={{ color: "#10b981" }}
-                                />
-                                {b}
-                              </span>
-                            ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Visual: real media if available, else empty */}
-                  <div className="sio-detail-visual">
-                    <div
-                      className="sio-visual-placeholder"
-                      style={{
-                        background: bgColor,
-                        position: "relative",
-                        overflow: "hidden",
-                        borderRadius: "12px",
-                        height: "100%",
-                        minHeight: 320,
-                      }}
-                    >
-                      {hasMedia &&
-                        (isVideo ? (
-                          <video
-                            src={section.hero_media_path}
-                            autoPlay={section.hero_autoplay}
-                            muted={section.hero_autoplay}
-                            loop={!!section.hero_autoplay}
-                            playsInline
-                            controls
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              display: "block",
-                              borderRadius: "12px",
-                              position: "relative",
-                              zIndex: 1,
-                            }}
-                          />
-                        ) : (
-                          <img
-                            src={section.hero_media_path}
-                            alt={section.hero_alt_text || section.title}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              display: "block",
-                              borderRadius: "12px",
-                            }}
-                          />
-                        ))}
                     </div>
-                  </div>
-                </section>
-                {idx < sections.length - 1 && (
-                  <div className="sio-section-divider" />
-                )}
-              </div>
-            );
-          })
+                  </section>
+                  {idx < sections.length - 1 && (
+                    <div className="sio-section-divider" />
+                  )}
+                </div>
+              );
+            })
         )}
       </div>
 
