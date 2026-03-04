@@ -925,6 +925,94 @@ const styles = `
     .sio-features-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
     .sio-footer-top { grid-template-columns: 1fr; }
   }
+
+  /* TABS */
+  .sio-tabs-wrapper {
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .sio-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0 24px;
+  }
+  .sio-tab-btn {
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 18px 36px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6b7280;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+    outline: none;
+    white-space: nowrap;
+  }
+  .sio-tab-btn:hover {
+    color: #1a56db;
+  }
+  .sio-tab-btn.active {
+    color: #1a56db;
+  }
+  .sio-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1a56db, #3b82f6);
+    border-radius: 3px 3px 0 0;
+    animation: tabSlideIn 0.2s ease;
+  }
+  @keyframes tabSlideIn {
+    from { opacity: 0; transform: scaleX(0.6); }
+    to   { opacity: 1; transform: scaleX(1); }
+  }
+  /* Desktop: show tab buttons, hide dropdown */
+  .sio-tabs-desktop { display: flex; width: 100%; justify-content: center; }
+  .sio-tabs-mobile  { display: none; }
+  /* Mobile: hide tab buttons, show dropdown */
+  @media (max-width: 600px) {
+    .sio-tabs-desktop { display: none; }
+    .sio-tabs-mobile {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 12px 16px;
+    }
+    .sio-tab-select {
+      width: 100%;
+      padding: 11px 40px 11px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a56db;
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      border-radius: 10px;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231a56db' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .sio-tab-select:focus {
+      border-color: #1a56db;
+      box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
+    }
+  }
 `;
 
 // Visual mock components for each section
@@ -1271,9 +1359,16 @@ const SECTION_BG_COLORS = [
   "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)",
 ];
 
+const TABS = [
+  { key: "Entreprises", label: "Entreprises" },
+  { key: "Profession", label: "Profession" },
+  { key: "Applications", label: "Applications" },
+];
+
 export default function SystemeFeatures({ sections = [] }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeTab, setActiveTab] = useState("Entreprises");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1370,26 +1465,41 @@ export default function SystemeFeatures({ sections = [] }) {
         </div>
       </section>
 
-      {/* FEATURES GRID */}
-      {/* <section className="sio-section" style={{background:'#fafafa'}}>
-        <div className="sio-section-inner">
-          <h2 className="sio-section-title">Tous les outils dont vous avez besoin au même endroit</h2>
-          <div className="sio-features-grid">
-            {FEATURES.map((f) => {
-              const Icon = f.icon;
-              return (
-                <div className="sio-feature-card" key={f.title}>
-                  <div className="sio-feature-icon-wrap">
-                    <Icon size={22} />
-                  </div>
-                  <h3>{f.title}</h3>
-                  <p>{f.desc}</p>
-                </div>
-              );
-            })}
+      {/* TABS */}
+      <div className="sio-tabs-wrapper">
+        <div className="sio-tabs">
+          {/* Desktop: tab buttons */}
+          <div className="sio-tabs-desktop">
+            {TABS.map((tab) => (
+              <button
+                key={tab.key}
+                className={`sio-tab-btn${activeTab === tab.key ? " active" : ""}`}
+                onClick={() => setActiveTab(tab.key)}
+              >
+                {tab.label}
+                {activeTab === tab.key && (
+                  <span className="sio-tab-indicator" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile: dropdown select */}
+          <div className="sio-tabs-mobile">
+            <select
+              className="sio-tab-select"
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+            >
+              {TABS.map((tab) => (
+                <option key={tab.key} value={tab.key}>
+                  {tab.label}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
-      </section> */}
+      </div>
 
       {/* ALTERNATING DETAIL SECTIONS — dynamic from API */}
       <div>
@@ -1406,7 +1516,14 @@ export default function SystemeFeatures({ sections = [] }) {
           </div>
         ) : (
           sections
-            ?.filter((section) => section.gate_name !== "Tektime")
+            ?.filter(
+              (section) =>
+                section.gate_name !== "Tektime" &&
+                (section.gate_type === activeTab ||
+                  section.gate_type
+                    ?.toLowerCase()
+                    .includes(activeTab.toLowerCase())),
+            )
             ?.map((section, idx) => {
               const isReverse = idx % 2 !== 0;
               const bgColor = SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length];
