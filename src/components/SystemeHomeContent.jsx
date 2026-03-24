@@ -558,6 +558,26 @@ const styles = `
   .sio-detail-section.reverse .sio-detail-content { order: 2; }
   .sio-detail-section.reverse .sio-detail-visual { order: 1; }
 
+  /* NO MEDIA STATE */
+  .sio-detail-section.no-media {
+    grid-template-columns: 1fr;
+    max-width: 800px;
+    text-align: center;
+  }
+  .sio-detail-section.no-media .sio-detail-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .sio-detail-section.no-media .sio-replaces {
+    align-items: center;
+  }
+  .sio-detail-section.no-media .sio-replaces-tags {
+    justify-content: center;
+  }
+
   .sio-detail-content h2 {
     font-size: clamp(22px, 2.5vw, 34px);
     font-weight: 800;
@@ -634,13 +654,19 @@ const styles = `
   }
   .sio-visual-placeholder {
     width: 100%;
-    height: 340px;
+    height: 480px;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    border-radius: 12px;
   }
+@media (max-width: 900px) {
+    .sio-visual-placeholder {
+      height: 320px;
+    }
+}
   .sio-visual-label {
     font-size: 15px;
     font-weight: 600;
@@ -1365,6 +1391,213 @@ const TABS = [
   { key: "Applications", label: "Applications" },
 ];
 
+const getYouTubeID = (url) => {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+};
+
+const getYouTubeEmbedUrl = (url, autoplay = false) => {
+  const id = getYouTubeID(url);
+  if (!id) return null;
+  return `https://www.youtube.com/embed/${id}?autoplay=${autoplay ? 1 : 0}&mute=${autoplay ? 1 : 0}`;
+};
+
+function LandingPageSection({
+  section,
+  idx,
+  isReverse,
+  bgColor,
+  isLast,
+  shouldPlayAudio,
+}) {
+  const isYoutube = section.hero_media_type === "youtube";
+  const hasMedia = isYoutube ? !!section.hero_youtube_url : !!section.hero_media_path;
+  const isVideo = section.hero_media_type === "video";
+
+  // useEffect(() => {
+  //   let audio = null;
+  //   let timeoutId = null;
+
+  //   if (shouldPlayAudio && section.audio_file) {
+  //     audio = new Audio(section.audio_file);
+
+  //     const playAudio = async () => {
+  //       try {
+  //         // Play the audio
+  //         await audio.play();
+
+  //         // Stop after 8 seconds
+  //         timeoutId = setTimeout(() => {
+  //           if (audio) {
+  //             audio.pause();
+  //             audio.currentTime = 0;
+  //           }
+  //         }, 8000);
+  //       } catch (err) {
+  //         console.warn("Audio autoplay blocked or failed:", err);
+  //       }
+  //     };
+
+  //     playAudio();
+  //   }
+
+  //   return () => {
+  //     if (audio) {
+  //       audio.pause();
+  //       audio = null;
+  //     }
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //   };
+  // }, [shouldPlayAudio, section.audio_file]);
+
+  return (
+    <div>
+      <section
+        className={`sio-detail-section${isReverse && hasMedia ? " reverse" : ""}${!hasMedia ? " no-media" : ""}`}
+      >
+        <div className="sio-detail-content">
+          {section.gate_name && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                background: "#eff6ff",
+                color: "#1a56db",
+                fontSize: 12,
+                fontWeight: 700,
+                padding: "4px 12px",
+                borderRadius: 20,
+                marginBottom: 14,
+                border: "1px solid #dbeafe",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}
+            >
+              {section.gate_name}
+            </div>
+          )}
+          <h2>{section.title}</h2>
+          <p>{section.subtitle}</p>
+          {section.gate_name && (
+            <Link
+              to={`https://tektime.io/gate/${section.gate_name}`}
+              className="sio-detail-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={async (e) => {
+                e.preventDefault();
+                const link = `https://tektime.io/gate/${section.gate_name}`;
+                if (section?.id) {
+                  try {
+                    await fetch(
+                      `${API_BASE_URL}/landing-pages/${section.id}/click`,
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                      },
+                    );
+                  } catch (error) {
+                    console.error("Error tracking click:", error);
+                  }
+                }
+                if (link) window.open(link, "_blank");
+              }}
+            >
+              En savoir plus <ArrowRight size={16} />
+            </Link>
+          )}
+          {section.hero_benefits?.some((b) => b) && (
+            <div className="sio-replaces">
+              <div className="sio-replaces-label">Avantages</div>
+              <div className="sio-replaces-tags">
+                {section.hero_benefits
+                  .filter((b) => b)
+                  .map((b, i) => (
+                    <span className="sio-tag" key={i}>
+                      <Check
+                        size={12}
+                        className="sio-tag-check"
+                        style={{ color: "#10b981" }}
+                      />
+                      {b}
+                    </span>
+                  ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {hasMedia && (
+          <div className="sio-detail-visual">
+            <div
+              className="sio-visual-placeholder"
+              style={{
+                background: bgColor,
+              }}
+            >
+              {isYoutube ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(
+                    section.hero_youtube_url,
+                    section.hero_autoplay,
+                  )}
+                  title={section.hero_alt_text || section.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "12px",
+                    position: "relative",
+                    zIndex: 1,
+                  }}
+                />
+              ) : isVideo ? (
+                <video
+                  src={section.hero_media_path}
+                  autoPlay={section.hero_autoplay}
+                  muted={section.hero_autoplay}
+                  loop={!!section.hero_autoplay}
+                  playsInline
+                  controls
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    borderRadius: "12px",
+                    position: "relative",
+                    zIndex: 1,
+                  }}
+                />
+              ) : (
+                <img
+                  src={section.hero_media_path}
+                  alt={section.hero_alt_text || section.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    borderRadius: "12px",
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        )}
+      </section>
+      {!isLast && <div className="sio-section-divider" />}
+    </div>
+  );
+}
+
 export default function SystemeFeatures({ sections = [] }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -1524,153 +1757,17 @@ export default function SystemeFeatures({ sections = [] }) {
                     ?.toLowerCase()
                     .includes(activeTab.toLowerCase())),
             )
-            ?.map((section, idx) => {
-              const isReverse = idx % 2 !== 0;
-              const bgColor = SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length];
-              const hasMedia = section.hero_media_path;
-              const isVideo = section.hero_media_type === "video";
-
-              return (
-                <div key={section.id}>
-                  <section
-                    className={`sio-detail-section${isReverse ? " reverse" : ""}`}
-                  >
-                    <div className="sio-detail-content">
-                      {/* Gate name badge */}
-                      {section.gate_name && (
-                        <div
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 6,
-                            background: "#eff6ff",
-                            color: "#1a56db",
-                            fontSize: 12,
-                            fontWeight: 700,
-                            padding: "4px 12px",
-                            borderRadius: 20,
-                            marginBottom: 14,
-                            border: "1px solid #dbeafe",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                          }}
-                        >
-                          {section.gate_name}
-                        </div>
-                      )}
-                      <h2>{section.title}</h2>
-                      <p>{section.subtitle}</p>
-                      {section.gate_name && (
-                        <Link
-                          to={`https://tektime.io/gate/${section.gate_name}`}
-                          className="sio-detail-link"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            const link = `https://tektime.io/gate/${section.gate_name}`;
-
-                            // Track click if ID is available
-                            if (section?.id) {
-                              try {
-                                await fetch(
-                                  `${API_BASE_URL}/landing-pages/${section.id}/click`,
-                                  {
-                                    method: "POST",
-                                    headers: {
-                                      "Content-Type": "application/json",
-                                    },
-                                  },
-                                );
-                              } catch (error) {
-                                console.error("Error tracking click:", error);
-                              }
-                            }
-
-                            if (link) {
-                              window.open(link, "_blank");
-                            }
-                          }}
-                        >
-                          En savoir plus <ArrowRight size={16} />
-                        </Link>
-                      )}
-                      {/* Hero benefits as check-tags */}
-                      {section.hero_benefits?.some((b) => b) && (
-                        <div className="sio-replaces">
-                          <div className="sio-replaces-label">Avantages</div>
-                          <div className="sio-replaces-tags">
-                            {section.hero_benefits
-                              .filter((b) => b)
-                              .map((b, i) => (
-                                <span className="sio-tag" key={i}>
-                                  <Check
-                                    size={12}
-                                    className="sio-tag-check"
-                                    style={{ color: "#10b981" }}
-                                  />
-                                  {b}
-                                </span>
-                              ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Visual: real media if available, else empty */}
-                    <div className="sio-detail-visual">
-                      <div
-                        className="sio-visual-placeholder"
-                        style={{
-                          background: bgColor,
-                          position: "relative",
-                          overflow: "hidden",
-                          borderRadius: "12px",
-                          height: "100%",
-                          minHeight: 320,
-                        }}
-                      >
-                        {hasMedia &&
-                          (isVideo ? (
-                            <video
-                              src={section.hero_media_path}
-                              autoPlay={section.hero_autoplay}
-                              muted={section.hero_autoplay}
-                              loop={!!section.hero_autoplay}
-                              playsInline
-                              controls
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                                display: "block",
-                                borderRadius: "12px",
-                                position: "relative",
-                                zIndex: 1,
-                              }}
-                            />
-                          ) : (
-                            <img
-                              src={section.hero_media_path}
-                              alt={section.hero_alt_text || section.title}
-                              style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
-                                display: "block",
-                                borderRadius: "12px",
-                              }}
-                            />
-                          ))}
-                      </div>
-                    </div>
-                  </section>
-                  {idx < sections.length - 1 && (
-                    <div className="sio-section-divider" />
-                  )}
-                </div>
-              );
-            })
+            ?.map((section, idx, filteredArr) => (
+              <LandingPageSection
+                key={section.id}
+                section={section}
+                idx={idx}
+                isReverse={idx % 2 !== 0}
+                bgColor={SECTION_BG_COLORS[idx % SECTION_BG_COLORS.length]}
+                isLast={idx === filteredArr.length - 1}
+                shouldPlayAudio={idx === 0}
+              />
+            ))
         )}
       </div>
 
