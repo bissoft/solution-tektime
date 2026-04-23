@@ -370,5 +370,27 @@
     "changes_terms_description": "Nous nous réservons le droit de modifier ces conditions à tout project. Nous vous informerons de toute modification en publiant les nouvelles conditions sur notre site web. Votre utilisation continue de TekTIME après la publication des modifications constitue votre acceptation des nouvelles conditions.",
     "governing_law": "10. Droit Applicable",
     "governing_law_description": "Ces conditions sont régies par les lois de la France. Tout litige découlant de ces conditions ou de l'utilisation de TekTIME sera soumis à la juridiction exclusive des tribunaux français."
+  },
+  "home_tabs": {
+    "entreprises": {
+      "label": "Entreprises",
+      "title": "Structurez et gérez 100% de votre entreprise avec des solutions adaptées à votre entreprise",
+      "subtitle": "Choisissez la solution qui s'adapte le mieux à la réalité de votre entreprise"
+    },
+    "profession": {
+      "label": "Professions",
+      "title": "Accédez à des solutions conçues pour votre métier et vos contraintes du quotidien",
+      "subtitle": "Trouvez les solutions Tektime adaptées à votre activité"
+    },
+    "applications": {
+      "label": "Applications",
+      "title": "Toutes vos applications métier, enfin connectées au même endroit",
+      "subtitle": "Sélectionnez les modules qui composent votre espace de travail idéal"
+    },
+    "services": {
+      "label": "Services",
+      "title": "Faites-vous accompagner pour déployer Tektime dans vos équipes",
+      "subtitle": "Découvrez nos offres de paramétrage, de formation et de support"
+    }
   }
 }

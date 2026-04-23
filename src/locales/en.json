@@ -370,5 +370,27 @@
     "changes_terms_description": "We reserve the right to modify these terms at any time. We will notify you of any changes by posting the new terms on our website. Your continued use of TekTIME after the posting of changes constitutes your acceptance of the new terms.",
     "governing_law": "10. Governing Law",
     "governing_law_description": "These terms are governed by the laws of France. Any dispute arising from these terms or the use of TekTIME will be subject to the exclusive jurisdiction of the French courts."
+  },
+  "home_tabs": {
+    "entreprises": {
+      "label": "Companies",
+      "title": "Structure and manage 100% of your business with solutions tailored to your company",
+      "subtitle": "Choose the solution that best suits your business reality"
+    },
+    "profession": {
+      "label": "Professions",
+      "title": "Access solutions designed for your business and your daily constraints",
+      "subtitle": "Find the Tektime solutions tailored to your business"
+    },
+    "applications": {
+      "label": "Applications",
+      "title": "All your business applications, finally connected in one place",
+      "subtitle": "Select the modules that make up your ideal workspace"
+    },
+    "services": {
+      "label": "Services",
+      "title": "Get support to deploy Tektime in your teams",
+      "subtitle": "Discover our setup, training and support offers"
+    }
   }
 }

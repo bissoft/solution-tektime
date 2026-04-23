@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Layout,
   Zap,
@@ -1386,9 +1387,10 @@ const SECTION_BG_COLORS = [
 ];
 
 const TABS = [
-  { key: "Entreprises", label: "Entreprises" },
-  { key: "Profession", label: "Profession" },
-  { key: "Applications", label: "Applications" },
+  { key: "Entreprises", i18nKey: "entreprises" },
+  { key: "Profession", i18nKey: "profession" },
+  { key: "Applications", i18nKey: "applications" },
+  { key: "Services", i18nKey: "services" },
 ];
 
 const getYouTubeID = (url) => {
@@ -1599,9 +1601,26 @@ function LandingPageSection({
 }
 
 export default function SystemeFeatures({ sections = [] }) {
+  const { t } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const visibleTabs = TABS.filter((tab) =>
+    sections.some(
+      (section) =>
+        section.gate_name !== "Tektime" &&
+        (section.gate_type === tab.key ||
+          section.gate_type?.toLowerCase().includes(tab.key.toLowerCase())),
+    ),
+  );
+
   const [activeTab, setActiveTab] = useState("Entreprises");
+
+  useEffect(() => {
+    if (visibleTabs.length > 0 && !visibleTabs.find(t => t.key === activeTab)) {
+      setActiveTab(visibleTabs[0].key);
+    }
+  }, [visibleTabs, activeTab]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -1703,13 +1722,13 @@ export default function SystemeFeatures({ sections = [] }) {
         <div className="sio-tabs">
           {/* Desktop: tab buttons */}
           <div className="sio-tabs-desktop">
-            {TABS.map((tab) => (
+            {visibleTabs.map((tab) => (
               <button
                 key={tab.key}
                 className={`sio-tab-btn${activeTab === tab.key ? " active" : ""}`}
                 onClick={() => setActiveTab(tab.key)}
               >
-                {tab.label}
+                {t(`home_tabs.${tab.i18nKey}.label`)}
                 {activeTab === tab.key && (
                   <span className="sio-tab-indicator" />
                 )}
@@ -1724,15 +1743,27 @@ export default function SystemeFeatures({ sections = [] }) {
               value={activeTab}
               onChange={(e) => setActiveTab(e.target.value)}
             >
-              {TABS.map((tab) => (
+              {visibleTabs.map((tab) => (
                 <option key={tab.key} value={tab.key}>
-                  {tab.label}
+                  {t(`home_tabs.${tab.i18nKey}.label`)}
                 </option>
               ))}
             </select>
           </div>
         </div>
       </div>
+
+      {/* TAB CONTENT HEADER */}
+      {visibleTabs.length > 0 && (
+        <div style={{ textAlign: "center", padding: "80px 24px 20px" }}>
+          <h2 style={{ fontSize: "36px", fontWeight: 800, color: "#0f172a", marginBottom: "16px", lineHeight: 1.2 }}>
+            {t(`home_tabs.${TABS.find((tab) => tab.key === activeTab)?.i18nKey}.title`)}
+          </h2>
+          <p style={{ fontSize: "18px", color: "#4b5563", maxWidth: "800px", margin: "0 auto", lineHeight: 1.5 }}>
+            {t(`home_tabs.${TABS.find((tab) => tab.key === activeTab)?.i18nKey}.subtitle`)}
+          </p>
+        </div>
+      )}
 
       {/* ALTERNATING DETAIL SECTIONS — dynamic from API */}
       <div>
