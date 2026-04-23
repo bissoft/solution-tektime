@@ -1615,6 +1615,7 @@ export default function SystemeFeatures({ sections = [] }) {
   );
 
   const [activeTab, setActiveTab] = useState("Entreprises");
+  const activeTabDetails = TABS.find((tab) => tab.key === activeTab);
 
   useEffect(() => {
     if (visibleTabs.length > 0 && !visibleTabs.find(t => t.key === activeTab)) {
@@ -1653,9 +1654,11 @@ export default function SystemeFeatures({ sections = [] }) {
         <div className="sio-hero">
           <div className="sio-hero-content">
             <h1>
-              Ne jonglez plus entre plusieurs outils pour votre entreprise
+              {activeTabDetails ? t(`home_tabs.${activeTabDetails.i18nKey}.title`) : t("Ne jonglez plus entre plusieurs outils pour votre entreprise")}
             </h1>
-            <p>Tout votre environnement de travail dans un seul outil</p>
+            <p>
+              {activeTabDetails ? t(`home_tabs.${activeTabDetails.i18nKey}.subtitle`) : t("Tout votre environnement de travail dans un seul outil")}
+            </p>
             {/* <div style={{display:'flex', gap:'12px', alignItems:'center'}}>
             <input 
               type="email" 
@@ -1753,17 +1756,6 @@ export default function SystemeFeatures({ sections = [] }) {
         </div>
       </div>
 
-      {/* TAB CONTENT HEADER */}
-      {visibleTabs.length > 0 && (
-        <div style={{ textAlign: "center", padding: "80px 24px 20px" }}>
-          <h2 style={{ fontSize: "36px", fontWeight: 800, color: "#0f172a", marginBottom: "16px", lineHeight: 1.2 }}>
-            {t(`home_tabs.${TABS.find((tab) => tab.key === activeTab)?.i18nKey}.title`)}
-          </h2>
-          <p style={{ fontSize: "18px", color: "#4b5563", maxWidth: "800px", margin: "0 auto", lineHeight: 1.5 }}>
-            {t(`home_tabs.${TABS.find((tab) => tab.key === activeTab)?.i18nKey}.subtitle`)}
-          </p>
-        </div>
-      )}
 
       {/* ALTERNATING DETAIL SECTIONS — dynamic from API */}
       <div>
